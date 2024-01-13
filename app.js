@@ -4,6 +4,7 @@ const cors = require("cors");
 
 app.use(cors()); // for accepting data from diffrent port and servers
 app.use(express.json()) // axios use json format to send data. so we need to use this middleware to see it
+app.use(express.urlencoded({extended:true}));
 
 //userRoutes
 const userRoutes = require('./routes/userRoutes');
