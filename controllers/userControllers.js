@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const saltRound = 10;
 
 const User = require("../models/userModel");
+const { getToken } = require("../utils/jwtToken");
 
 exports.userRegister = async (req, res) => {
     const { name, email, password } = req.body;
@@ -70,15 +71,18 @@ exports.userLogin = async (req, res) => {
             });
         }
 
-        res.status(200).json({
-            success: true,
-            message: "Login Successfull!",
-            isAuthenticated: true,
-            user
-        });
+        req.user = user;
+        getToken(req,res);
+
+        // res.status(200).json({
+        //     success: true,
+        //     message: "Login Successfull!",
+        //     isAuthenticated: true,
+        //     user
+        // });
 
     } catch (error) {
-        console.log(error.message);
+        console.log('from userLogin',error.message);
     }
 
 }
